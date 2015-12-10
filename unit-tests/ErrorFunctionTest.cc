@@ -47,20 +47,20 @@ static bool debug = false;
 
 namespace libdap {
 
-class DebugFunctionsTest: public CppUnit::TestFixture {
+class ErrorFunctionTest: public CppUnit::TestFixture {
 private:
     BaseTypeFactory btf;
     DDS *testDDS;
 
 public:
     // Called once before everything gets tested
-    DebugFunctionsTest()
+    ErrorFunctionTest()
     {
 
     }
 
     // Called at the end of the test
-    ~DebugFunctionsTest()
+    ~ErrorFunctionTest()
     {
     }
 
@@ -82,10 +82,8 @@ public:
         delete testDDS;
     }
 
-CPPUNIT_TEST_SUITE( DebugFunctionsTest );
+CPPUNIT_TEST_SUITE( ErrorFunctionTest );
 
-    CPPUNIT_TEST(abortFunctionTest);
-    CPPUNIT_TEST(sleepFunctionTest);
     CPPUNIT_TEST(internalErrorFunctionTest);
     CPPUNIT_TEST(internalFatalErrorFunctionTest);
     CPPUNIT_TEST(syntaxUserErrorFunctionTest);
@@ -94,58 +92,6 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
 
     CPPUNIT_TEST_SUITE_END()
     ;
-
-    void abortFunctionTest()
-    {
-        DBG(cerr << endl << "abortFunctionTest() - BEGIN." << endl);
-      
-        debug_function::AbortFunc abortFunc;
-        
-        libdap::btp_func abort_function = abortFunc.get_btp_func();
-
-        libdap::Int32 time("time");
-        time.set_value(3000);
-        libdap::BaseType *argv[] = { &time };
-        libdap::BaseType *result = 0;
-        libdap::BaseType **btpp = &result;
-        
-        abort_function(0, argv, *testDDS, btpp);      
-        
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
-        }
-             
-        CPPUNIT_ASSERT(true);
-        
-        DBG(cerr << "abortFunctionTest() - END." << endl);
-    }
-
-    void sleepFunctionTest()
-    {
-        DBG(cerr << endl << "sleepFunctionTest() - BEGIN." << endl);
-     
-        debug_function::SleepFunc sleepFunc;
-        
-        libdap::btp_func sleep_function=sleepFunc.get_btp_func();
-           
-        libdap::Int32 time("time");
-        time.set_value(3000);
-        libdap::BaseType *argv[] = { &time };
-        libdap::BaseType *result = 0;
-        libdap::BaseType **btpp = &result;
-        
-        sleep_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
-        }
-
-        CPPUNIT_ASSERT(true);
-        
-        DBG(cerr << "sleepFunctionTest() - END." << endl);
-    }
 
     void internalErrorFunctionTest()
     {
@@ -280,7 +226,7 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
 
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DebugFunctionsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(ErrorFunctionTest);
 
 } /* namespace libdap */
 

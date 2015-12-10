@@ -50,7 +50,7 @@ DISTCLEANFILES = test_config.h *.strm *.file tmp.txt
 #
 
 if CPPUNIT
-UNIT_TESTS = DebugFunctionsTest
+UNIT_TESTS = ErrorFunctionTest AbortFunctionTest SleepFunctionTest
 else
 UNIT_TESTS =
 
@@ -63,8 +63,15 @@ check-local:
 	@echo ""
 endif
 
-# DebugFunctionsTest_OBJ = ../DebugFunctions.o
-DebugFunctionsTest_SOURCES =  DebugFunctionsTest.cc 
-DebugFunctionsTest_LDADD =  $(DebugFunctionsTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+ErrorFunctionTest_SOURCES =  ErrorFunctionTest.cc 
+ErrorFunctionTest_LDADD =  $(DErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+
+
+AbortFunctionTest_SOURCES =  AbortFunctionTest.cc 
+AbortFunctionTest_LDADD =  $(AbortFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+
+
+SleepFunctionTest_SOURCES =  SleepFunctionTest.cc 
+SleepFunctionTest_LDADD =  $(SleepFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 
 
