@@ -33,6 +33,11 @@
 #include <Int32.h>
 #include <Str.h>
 #include <BESError.h>
+#include <BESInternalError.h>
+#include <BESInternalFatalError.h>
+#include <BESSyntaxUserError.h>
+#include <BESForbiddenError.h>
+#include <BESNotFoundError.h>
 
 
 #include "BESAbstractModule.h"
@@ -225,23 +230,43 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
             switch(error_type) {
             
                 case BES_INTERNAL_ERROR:
-                msg << "A BES_INTERNAL_ERROR was requested.";
+                {
+                    msg << "A BESInternalError was requested.";
+                    BESInternalError error(msg.str(),__FILE__,__LINE__);
+                    throw error;
+                }
                 break;
                 
                 case BES_INTERNAL_FATAL_ERROR:
-                msg << "A BES_INTERNAL_FATAL_ERROR was requested.";
+                {
+                    msg << "A BESInternalFatalError was requested.";
+                    BESInternalFatalError error(msg.str(),__FILE__,__LINE__);
+                    throw error;
+                }
                 break;
                 
                 case BES_SYNTAX_USER_ERROR:
-                msg << "A BES_SYNTAX_USER_ERROR was requested.";
+                {
+                    msg << "A BESSyntaxUserError was requested.";
+                    BESSyntaxUserError error(msg.str(),__FILE__,__LINE__);
+                    throw error;
+                }
                 break;
                 
                 case BES_FORBIDDEN_ERROR:
-                msg << "A BES_FORBIDDEN_ERROR was requested.";
+                {
+                    msg << "A BESForbiddenError was requested.";
+                    BESForbiddenError error(msg.str(),__FILE__,__LINE__);
+                    throw error;
+                }
                 break;
                 
                 case BES_NOT_FOUND_ERROR:
-                msg << "A BES_NOT_FOUND_ERROR was requested.";
+                {
+                    msg << "A BESNotFoundError was requested.";
+                    BESNotFoundError error(msg.str(),__FILE__,__LINE__);
+                    throw error;
+                }
                 break;
                 
                 default:

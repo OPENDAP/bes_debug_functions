@@ -149,7 +149,7 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
 
     void internalErrorFunctionTest()
     {
-        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "internalErrorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
@@ -161,22 +161,22 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
         libdap::BaseType *result = 0;
         libdap::BaseType **btpp = &result;
         
-        error_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
+        try {
+            error_function(1, argv, *testDDS, btpp);      
+            CPPUNIT_ASSERT(false);
         }
-
-        CPPUNIT_ASSERT(true);
+        catch(BESInternalError e){
+            DBG(cerr << "internalErrorFunctionTest() - Caught BESInternalError. msg: " << e.get_message() << endl);
+            CPPUNIT_ASSERT(true);
+        }
         
-        DBG(cerr << "errorFunctionTest() - END." << endl);
+        DBG(cerr << "internalErrorFunctionTest() - END." << endl);
     }
     
     
     void internalFatalErrorFunctionTest()
     {
-        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "internalFatalErrorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
@@ -188,21 +188,21 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
         libdap::BaseType *result = 0;
         libdap::BaseType **btpp = &result;
         
-        error_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
+        try {
+            error_function(1, argv, *testDDS, btpp);      
+            CPPUNIT_ASSERT(false);
+        }
+        catch(BESInternalFatalError e){
+            DBG(cerr << "internalFatalErrorFunctionTest() - Caught BESInternalFatalError. msg: " << e.get_message() << endl);
+            CPPUNIT_ASSERT(true);
         }
 
-        CPPUNIT_ASSERT(true);
-        
-        DBG(cerr << "errorFunctionTest() - END." << endl);
+        DBG(cerr << "internalFatalErrorFunctionTest() - END." << endl);
     }
 
     void syntaxUserErrorFunctionTest()
     {
-        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "syntaxUserErrorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
@@ -214,21 +214,21 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
         libdap::BaseType *result = 0;
         libdap::BaseType **btpp = &result;
         
-        error_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
+        try {
+            error_function(1, argv, *testDDS, btpp);      
+            CPPUNIT_ASSERT(false);
         }
-
-        CPPUNIT_ASSERT(true);
+        catch(BESSyntaxUserError e){
+            DBG(cerr << "syntaxUserErrorFunctionTest() - Caught BESSyntaxUserError. msg: " << e.get_message() << endl);
+            CPPUNIT_ASSERT(true);
+        }
         
-        DBG(cerr << "errorFunctionTest() - END." << endl);
+        DBG(cerr << "syntaxUserErrorFunctionTest() - END." << endl);
     }
 
     void forbiddenErrorFunctionTest()
     {
-        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "forbiddenErrorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
@@ -240,21 +240,21 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
         libdap::BaseType *result = 0;
         libdap::BaseType **btpp = &result;
         
-        error_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
+        try {
+            error_function(1, argv, *testDDS, btpp);      
+            CPPUNIT_ASSERT(false);
         }
-
-        CPPUNIT_ASSERT(true);
+        catch(BESForbiddenError e){
+            DBG(cerr << "forbiddenErrorFunctionTest() - Caught BESForbiddenError. msg: " << e.get_message() << endl);
+            CPPUNIT_ASSERT(true);
+        }
         
-        DBG(cerr << "errorFunctionTest() - END." << endl);
+        DBG(cerr << "forbiddenErrorFunctionTest() - END." << endl);
     }
 
     void notFoundErrorFunctionTest()
     {
-        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "notFoundErrorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
@@ -266,16 +266,16 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
         libdap::BaseType *result = 0;
         libdap::BaseType **btpp = &result;
         
-        error_function(1, argv, *testDDS, btpp);      
-
-        if(debug){
-            (*btpp)->print_val(cerr,"",false);
-            cerr << endl;
+        try {
+            error_function(1, argv, *testDDS, btpp);      
+            CPPUNIT_ASSERT(false);
         }
-
-        CPPUNIT_ASSERT(true);
+        catch(BESNotFoundError e){
+            DBG(cerr << "notFoundErrorFunctionTest() - Caught BESNotFoundError. msg: " << e.get_message() << endl);
+            CPPUNIT_ASSERT(true);
+        }
         
-        DBG(cerr << "errorFunctionTest() - END." << endl);
+        DBG(cerr << "notFoundErrorFunctionTest() - END." << endl);
     }
 
 };
