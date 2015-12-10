@@ -12,4 +12,21 @@ Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache/
+config.h
+config.log
+config.status
+configure
+libdebug_functions.la
+libtool
+stamp-h1
+tests/atconfig
+tests/atlocal
+tests/bes.conf
+tests/debug_functionsTest
+tests/debug_functionsTest.log
+tests/package.m4
+unit-tests/DebugFunctions.Po
+unit-tests/DebugFunctionsTest
+unit-tests/DebugFunctionsTest.dSYM/
+unit-tests/test_config.h
 

@@ -22,11 +22,13 @@
 //
 // You can contact OPeNDAP, Inc. at PO Box 112, Saunderstown, RI. 02874-0112.
 
+#include <stdlib.h>     /* abort, NULL */
 #include <iostream>
 #include "DebugFunctions.h"
 
-
-
+#include <Str.h>
+#include <Int32.h>
+#include <ServerFunction.h>
 #include "ServerFunctionsList.h"
 #include "BESDebug.h"
 
@@ -76,7 +78,17 @@ void DebugFunctions::dump(ostream &strm) const
     strm << BESIndent::LMarg << "DebugFunctions::dump - (" << (void *) this << ")" << std::endl;
 }
 
-} // namespace debug
+
+
+
+
+
+
+
+
+
+
+} // namespace debug_function
 
 extern "C" {
 BESAbstractModule *maker()

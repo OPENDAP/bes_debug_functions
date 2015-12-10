@@ -63,6 +63,7 @@ check-local:
 	@echo ""
 endif
 
+# DebugFunctionsTest_OBJ = ../DebugFunctions.o
 DebugFunctionsTest_SOURCES =  DebugFunctionsTest.cc 
 DebugFunctionsTest_LDADD =  $(DebugFunctionsTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 

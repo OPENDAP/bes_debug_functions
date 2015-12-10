@@ -86,76 +86,196 @@ CPPUNIT_TEST_SUITE( DebugFunctionsTest );
 
     CPPUNIT_TEST(abortFunctionTest);
     CPPUNIT_TEST(sleepFunctionTest);
-    CPPUNIT_TEST(errorFunctionTest);
+    CPPUNIT_TEST(internalErrorFunctionTest);
+    CPPUNIT_TEST(internalFatalErrorFunctionTest);
+    CPPUNIT_TEST(syntaxUserErrorFunctionTest);
+    CPPUNIT_TEST(forbiddenErrorFunctionTest);
+    CPPUNIT_TEST(notFoundErrorFunctionTest);
 
     CPPUNIT_TEST_SUITE_END()
     ;
 
     void abortFunctionTest()
     {
-        DBG(cerr << " abortFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "abortFunctionTest() - BEGIN." << endl);
       
         debug_function::AbortFunc abortFunc;
         
-        libdap::btp_func btp_abort_func = abortFunc.get_btp_func();
-   
-        libdap::BaseType **btpp;
-        
-        libdap::BaseType *argv[0];
-#if 0
-      
+        libdap::btp_func abort_function = abortFunc.get_btp_func();
 
-      
-        btp_abort_func(0, argv, *testDDS, btpp);
+        libdap::Int32 time("time");
+        time.set_value(3000);
+        libdap::BaseType *argv[] = { &time };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
         
-        cerr << endl;
-        cerr << " btpp: " << hex  << btpp << endl;
-        cerr << "*btpp: " << hex  << *btpp << endl;
-
-        cerr << "(*btpp)->is_constructor_type(): " << (*btpp)->is_constructor_type() << endl;
-        cerr << "(*btpp)->type_name(): " << (*btpp)->type_name() << endl;
-        cerr << "(*btpp)->print_val(cerr,"",false): ";
-        (*btpp)->print_val(cerr,"",false);
-        cerr << endl;
+        abort_function(0, argv, *testDDS, btpp);      
         
         if(debug){
-        
             (*btpp)->print_val(cerr,"",false);
-        
+            cerr << endl;
         }
-              
-        
-#endif
-
+             
         CPPUNIT_ASSERT(true);
         
-        DBG(cerr << " abortFunctionTest() - END." << endl);
+        DBG(cerr << "abortFunctionTest() - END." << endl);
     }
 
     void sleepFunctionTest()
     {
-        DBG(cerr << " sleepFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "sleepFunctionTest() - BEGIN." << endl);
      
         debug_function::SleepFunc sleepFunc;
         
-        libdap::btp_func btpf=sleepFunc.get_btp_func();
-   
+        libdap::btp_func sleep_function=sleepFunc.get_btp_func();
+           
+        libdap::Int32 time("time");
+        time.set_value(3000);
+        libdap::BaseType *argv[] = { &time };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        sleep_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
         CPPUNIT_ASSERT(true);
         
-        DBG(cerr << " sleepFunctionTest() - END." << endl);
+        DBG(cerr << "sleepFunctionTest() - END." << endl);
     }
 
-    void errorFunctionTest()
+    void internalErrorFunctionTest()
     {
-        DBG(cerr << " errorFunctionTest() - BEGIN." << endl);
+        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
         
         debug_function::ErrorFunc errorFunc;
         
-        libdap::btp_func btpf=errorFunc.get_btp_func();
-           
+        libdap::btp_func error_function=errorFunc.get_btp_func();
+        
+        libdap::Int32 error_type("error_type");
+        error_type.set_value(BES_INTERNAL_ERROR);
+        libdap::BaseType *argv[] = { &error_type };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        error_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
         CPPUNIT_ASSERT(true);
         
-        DBG(cerr << " errorFunctionTest() - END." << endl);
+        DBG(cerr << "errorFunctionTest() - END." << endl);
+    }
+    
+    
+    void internalFatalErrorFunctionTest()
+    {
+        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        
+        debug_function::ErrorFunc errorFunc;
+        
+        libdap::btp_func error_function=errorFunc.get_btp_func();
+        
+        libdap::Int32 error_type("error_type");
+        error_type.set_value(BES_INTERNAL_FATAL_ERROR);
+        libdap::BaseType *argv[] = { &error_type };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        error_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
+        CPPUNIT_ASSERT(true);
+        
+        DBG(cerr << "errorFunctionTest() - END." << endl);
+    }
+
+    void syntaxUserErrorFunctionTest()
+    {
+        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        
+        debug_function::ErrorFunc errorFunc;
+        
+        libdap::btp_func error_function=errorFunc.get_btp_func();
+        
+        libdap::Int32 error_type("error_type");
+        error_type.set_value(BES_SYNTAX_USER_ERROR);
+        libdap::BaseType *argv[] = { &error_type };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        error_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
+        CPPUNIT_ASSERT(true);
+        
+        DBG(cerr << "errorFunctionTest() - END." << endl);
+    }
+
+    void forbiddenErrorFunctionTest()
+    {
+        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        
+        debug_function::ErrorFunc errorFunc;
+        
+        libdap::btp_func error_function=errorFunc.get_btp_func();
+        
+        libdap::Int32 error_type("error_type");
+        error_type.set_value(BES_FORBIDDEN_ERROR);
+        libdap::BaseType *argv[] = { &error_type };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        error_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
+        CPPUNIT_ASSERT(true);
+        
+        DBG(cerr << "errorFunctionTest() - END." << endl);
+    }
+
+    void notFoundErrorFunctionTest()
+    {
+        DBG(cerr << endl << "errorFunctionTest() - BEGIN." << endl);
+        
+        debug_function::ErrorFunc errorFunc;
+        
+        libdap::btp_func error_function=errorFunc.get_btp_func();
+        
+        libdap::Int32 error_type("error_type");
+        error_type.set_value(BES_NOT_FOUND_ERROR);
+        libdap::BaseType *argv[] = { &error_type };
+        libdap::BaseType *result = 0;
+        libdap::BaseType **btpp = &result;
+        
+        error_function(1, argv, *testDDS, btpp);      
+
+        if(debug){
+            (*btpp)->print_val(cerr,"",false);
+            cerr << endl;
+        }
+
+        CPPUNIT_ASSERT(true);
+        
+        DBG(cerr << "errorFunctionTest() - END." << endl);
     }
 
 };
@@ -174,7 +294,7 @@ int main(int argc, char*argv[])
     while ((option_char = getopt()) != -1)
         switch (option_char) {
         case 'd':
-            debug = 1;  // debug is a static global
+            debug = true;  // debug is a static global
             BESDebug::SetUp("cerr,ugrid");
             break;
         default:
