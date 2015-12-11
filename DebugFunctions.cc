@@ -57,6 +57,12 @@ void DebugFunctions::initialize(const string &/*modname*/)
     debug_function::AbortFunc *abortFunc = new debug_function::AbortFunc();
     libdap::ServerFunctionsList::TheList()->add_function(abortFunc);
 
+    debug_function::SleepFunc *sleepFunc = new debug_function::SleepFunc();
+    libdap::ServerFunctionsList::TheList()->add_function(sleepFunc);
+
+    debug_function::ErrorFunc *errorFunc = new debug_function::ErrorFunc();
+    libdap::ServerFunctionsList::TheList()->add_function(errorFunc);
+
     BESDEBUG("DebugFunctions", "initialize() - function names: " << getFunctionNames() << std::endl);
 
     BESDEBUG("DebugFunctions", "initialize() - END" << std::endl);
