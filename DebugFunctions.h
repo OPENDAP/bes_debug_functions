@@ -88,8 +88,14 @@ void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
         libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
         if(param1){
            libdap::dods_int32 milliseconds = param1->value();
+           
+           msg << "abort in " << milliseconds << "ms" << endl;
+           response->set_value(msg.str());
+        
            usleep(milliseconds * 1000);   
+           msg << "abort now. "  << endl;
            std::abort();
+           return;
         }
         else {
             msg << "This function only accepts integer values "
@@ -217,6 +223,8 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
     *btpp = response;
+    
+    string location = "error_ssf";
 
     if(argc!=1){
         msg << "Missing error type parameter!  USAGE: " 
@@ -232,7 +240,7 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
                 case BES_INTERNAL_ERROR:
                 {
                     msg << "A BESInternalError was requested.";
-                    BESInternalError error(msg.str(),__FILE__,__LINE__);
+                    BESInternalError error(msg.str(),location,0);
                     throw error;
                 }
                 break;
@@ -240,7 +248,7 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
                 case BES_INTERNAL_FATAL_ERROR:
                 {
                     msg << "A BESInternalFatalError was requested.";
-                    BESInternalFatalError error(msg.str(),__FILE__,__LINE__);
+                    BESInternalFatalError error(msg.str(),location,0);
                     throw error;
                 }
                 break;
@@ -248,7 +256,7 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
                 case BES_SYNTAX_USER_ERROR:
                 {
                     msg << "A BESSyntaxUserError was requested.";
-                    BESSyntaxUserError error(msg.str(),__FILE__,__LINE__);
+                    BESSyntaxUserError error(msg.str(),location,0);
                     throw error;
                 }
                 break;
@@ -256,7 +264,7 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
                 case BES_FORBIDDEN_ERROR:
                 {
                     msg << "A BESForbiddenError was requested.";
-                    BESForbiddenError error(msg.str(),__FILE__,__LINE__);
+                    BESForbiddenError error(msg.str(),location,0);
                     throw error;
                 }
                 break;
@@ -264,7 +272,7 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
                 case BES_NOT_FOUND_ERROR:
                 {
                     msg << "A BESNotFoundError was requested.";
-                    BESNotFoundError error(msg.str(),__FILE__,__LINE__);
+                    BESNotFoundError error(msg.str(),location,0);
                     throw error;
                 }
                 break;

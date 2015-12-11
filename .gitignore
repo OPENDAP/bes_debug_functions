@@ -22,8 +22,10 @@ stamp-h1
 tests/atconfig
 tests/atlocal
 tests/bes.conf
+tests/bes.log
 tests/debug_functionsTest
 tests/debug_functionsTest.log
+tests/debug_functionsTest.dir
 tests/package.m4
 unit-tests/*.Po
 unit-tests/*.dSYM
@@ -32,3 +34,4 @@ unit-tests/AbortFunctionTest
 unit-tests/DebugFunctionsTest
 unit-tests/ErrorFunctionTest
 unit-tests/SleepFunctionTest
+debug_functions.conf

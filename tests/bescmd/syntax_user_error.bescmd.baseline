@@ -6,8 +6,8 @@
             <Message>A BESSyntaxUserError was requested.</Message>
             <Administrator>support@opendap.org</Administrator>
             <Location>
-                <File>./DebugFunctions.h</File>
-                <Line>251</Line>
+                <File>error_ssf</File>
+                <Line>0</Line>
             </Location>
         </BESError>
     </getDODS>
