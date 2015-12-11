@@ -3,7 +3,7 @@
 m4_include([handler_tests_macros.m4])
 
 AT_BESCMD_RESPONSE_TEST([sleep.bescmd])
-AT_BESCMD_RESPONSE_TEST([abort.bescmd])
+AT_BESCMD_ABORT_TEST([abort.bescmd], [xfail])
 AT_BESCMD_RESPONSE_TEST([internal_error.bescmd])
 AT_BESCMD_RESPONSE_TEST([internal_fatal_error.bescmd])
 AT_BESCMD_RESPONSE_TEST([syntax_user_error.bescmd])
