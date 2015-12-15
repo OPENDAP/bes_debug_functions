@@ -22,15 +22,25 @@
 //
 // You can contact OPeNDAP, Inc. at PO Box 112, Saunderstown, RI. 02874-0112.
 
+#include <sstream>      // std::stringstream
 #include <stdlib.h>     /* abort, NULL */
 #include <iostream>
+
+#include <sys/time.h>
+
 #include "DebugFunctions.h"
 
-#include <Str.h>
-#include <Int32.h>
-#include <ServerFunction.h>
 #include "ServerFunctionsList.h"
 #include "BESDebug.h"
+#include <Int32.h>
+#include <Str.h>
+#include <BESError.h>
+#include <BESInternalError.h>
+#include <BESInternalFatalError.h>
+#include <BESSyntaxUserError.h>
+#include <BESForbiddenError.h>
+#include <BESNotFoundError.h>
+
 
 namespace debug_function {
 
@@ -60,6 +70,9 @@ void DebugFunctions::initialize(const string &/*modname*/)
     debug_function::SleepFunc *sleepFunc = new debug_function::SleepFunc();
     libdap::ServerFunctionsList::TheList()->add_function(sleepFunc);
 
+    debug_function::SumUntilFunc *sumUntilFunc = new debug_function::SumUntilFunc();
+    libdap::ServerFunctionsList::TheList()->add_function(sumUntilFunc);
+
     debug_function::ErrorFunc *errorFunc = new debug_function::ErrorFunc();
     libdap::ServerFunctionsList::TheList()->add_function(errorFunc);
 
@@ -86,6 +99,248 @@ void DebugFunctions::dump(ostream &strm) const
 
 
 
+/*****************************************************************************************
+ * 
+ * Abort Function (Debug Functions)
+ * 
+ * This server side function calls abort(). (boom)
+ *
+ */
+void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+
+    std::stringstream msg;
+    libdap::Str *response = new libdap::Str("info");
+    *btpp = response;
+
+    if(argc!=1){
+        msg << "Missing time parameter!  USAGE: " 
+            << abort_usage;
+    }
+    else {
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
+        if(param1){
+           libdap::dods_int32 milliseconds = param1->value();
+           
+           msg << "abort in " << milliseconds << "ms" << endl;
+           response->set_value(msg.str());
+        
+           usleep(milliseconds * 1000);   
+           msg << "abort now. "  << endl;
+           std::abort();
+           return;
+        }
+        else {
+            msg << "This function only accepts integer values "
+                << "for the time (in milliseconds) parameter.  USAGE: " 
+                << abort_usage;
+        }
+        
+    }
+    
+    response->set_value(msg.str());
+    return;
+};
+
+
+ 
+/*****************************************************************************************
+ * 
+ * Sleep Function (Debug Functions)
+ * 
+ * This server side function calls sleep() for the number 
+ * of millisecs passed in at argv[0]. (Zzzzzzzzzzzzzzz)
+ *
+ */
+ 
+void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+
+    std::stringstream msg;
+    libdap::Str *response = new libdap::Str("info");
+    *btpp = response;
+
+    if(argc!=1){
+        msg << "Missing time parameter!  USAGE: " 
+            << sleep_usage;
+    }
+    else {
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
+        if(param1){
+           libdap::dods_int32 milliseconds = param1->value();
+            usleep(milliseconds * 1000);   
+            msg << "Slept for " 
+                << milliseconds 
+                << " ms.";
+        }
+        else {
+            msg << "This function only accepts integer values "
+                << "for the time (in milliseconds) parameter.  USAGE: " 
+                << sleep_usage;
+        }
+        
+    }
+    
+    response->set_value(msg.str());
+    return;
+};
+
+
+
+
+ 
+
+/*****************************************************************************************
+ * 
+ * SumUntil (Debug Functions)
+ * 
+ * This server side function computes a sum until a the amount of
+ * of millisecs passed in at argv[0] has transpired. (++++++)
+ *
+ */
+ 
+void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+
+    std::stringstream msg;
+    libdap::Str *response = new libdap::Str("info");
+    *btpp = response;
+
+
+    if(argc!=1){
+        msg << "Missing time parameter!  USAGE: " 
+            << sum_until_usage;
+    }
+    else {
+    
+
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
+        if(param1){
+            libdap::dods_int32 milliseconds = param1->value();
+
+            struct timeval  tv;
+            gettimeofday(&tv, NULL);
+            double start_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ; // convert tv_sec & tv_usec to millisecond
+            double end_time = start_time;
+
+            long fib;
+            long one_past  = 1;
+            long two_past  = 0;
+            
+            bool done = false;
+            while(!done){
+                fib = one_past + two_past;
+                two_past = one_past;            
+                one_past = fib;
+                gettimeofday(&tv, NULL);
+                end_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ; // convert tv_sec & tv_usec to millisecond
+                if( end_time - start_time > milliseconds){
+                    done = true;
+                }
+            }
+
+            msg << "Summed for " 
+                << end_time - start_time 
+                << " ms.";
+        }
+        else {
+            msg << "This function only accepts integer values "
+                << "for the time (in milliseconds) parameter.  USAGE: " 
+                << sum_until_usage;
+        }
+        
+    }
+    
+    response->set_value(msg.str());
+    return;
+};
+
+
+
+
+/*****************************************************************************************
+ * 
+ * Error Function (Debug Functions)
+ * 
+ * This server side function calls calls sleep() for the number 
+ * of ms passed in at argv[0]. (Zzzzzzzzzzzzzzz)
+ *
+ */
+void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+
+    std::stringstream msg;
+    libdap::Str *response = new libdap::Str("info");
+    *btpp = response;
+    
+    string location = "error_ssf";
+
+    if(argc!=1){
+        msg << "Missing error type parameter!  USAGE: " 
+            << error_usage;
+    }
+    else {
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
+        if(param1){
+            libdap::dods_int32 error_type = param1->value();
+        
+            switch(error_type) {
+            
+                case BES_INTERNAL_ERROR:
+                {
+                    msg << "A BESInternalError was requested.";
+                    BESInternalError error(msg.str(),location,0);
+                    throw error;
+                }
+                break;
+                
+                case BES_INTERNAL_FATAL_ERROR:
+                {
+                    msg << "A BESInternalFatalError was requested.";
+                    BESInternalFatalError error(msg.str(),location,0);
+                    throw error;
+                }
+                break;
+                
+                case BES_SYNTAX_USER_ERROR:
+                {
+                    msg << "A BESSyntaxUserError was requested.";
+                    BESSyntaxUserError error(msg.str(),location,0);
+                    throw error;
+                }
+                break;
+                
+                case BES_FORBIDDEN_ERROR:
+                {
+                    msg << "A BESForbiddenError was requested.";
+                    BESForbiddenError error(msg.str(),location,0);
+                    throw error;
+                }
+                break;
+                
+                case BES_NOT_FOUND_ERROR:
+                {
+                    msg << "A BESNotFoundError was requested.";
+                    BESNotFoundError error(msg.str(),location,0);
+                    throw error;
+                }
+                break;
+                
+                default:
+                msg << "An unrecognized error_type parameter was received. error_type: " << error_type;
+                break;
+            }
+            
+
+        }
+        else {
+            msg << "This function only accepts integer values "
+                << "for the error type parameter.  USAGE: " 
+                << error_usage;
+        }
+        
+    }
+    
+    response->set_value(msg.str());
+    return;
+
+};
 
 
 
