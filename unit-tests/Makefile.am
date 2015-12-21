@@ -64,14 +64,14 @@ check-local:
 endif
 
 ErrorFunctionTest_SOURCES =  ErrorFunctionTest.cc 
-ErrorFunctionTest_LDADD =  $(ErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+ErrorFunctionTest_LDADD =  ../DebugFunctions.o $(ErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 
 
 AbortFunctionTest_SOURCES =  AbortFunctionTest.cc 
-AbortFunctionTest_LDADD =  $(AbortFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+AbortFunctionTest_LDADD =  ../DebugFunctions.o $(AbortFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 
 
 SleepFunctionTest_SOURCES =  SleepFunctionTest.cc 
-SleepFunctionTest_LDADD =  $(SleepFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+SleepFunctionTest_LDADD =  ../DebugFunctions.o $(SleepFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 
 

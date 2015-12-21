@@ -60,24 +60,11 @@ public:
  * This server side function calls abort(). (boom)
  *
  */
-string abort_usage="abort(##) Where ## is the number of milliseconds to sleep before calling abort.";
 void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp);
 class AbortFunc: public libdap::ServerFunction {
 public:
-    AbortFunc()
-{
-        setName("abort");
-        setDescriptionString((string)"This function calls abort() killing the beslistner process.");
-        setUsageString("abort()");
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/abort");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::abort_ssf);
-        setVersion("1.0");
-}
-    virtual ~AbortFunc()
-    {
-    }
-
+    AbortFunc();
+    virtual ~AbortFunc(){}
 };
 
 /*****************************************************************************************
@@ -88,24 +75,11 @@ public:
  * of millisecs passed in at argv[0]. (Zzzzzzzzzzzzzzz)
  *
  */
-string sleep_usage = "sleep(##) where ## is the number of milliseconds to sleep.";
 void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp);
 class SleepFunc: public libdap::ServerFunction {
 public:
-    SleepFunc()
-{
-        setName("sleep");
-        setDescriptionString((string)"This function calls sleep() for the specified number of millisecs.");
-        setUsageString(sleep_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/sleep");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::sleep_ssf);
-        setVersion("1.0");
-}
-    virtual ~SleepFunc()
-    {
-    }
-
+    SleepFunc();
+    virtual ~SleepFunc(){}
 };
 
 
@@ -117,25 +91,11 @@ public:
  * of millisecs passed in at argv[0] has transpired. (++++++)
  *
  */
-string sum_until_usage = "sum_until(##) Will compute a sum until ## of milliseconds has transpired.";
-
 void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp);
-
 class SumUntilFunc: public libdap::ServerFunction {
 public:
-    SumUntilFunc()
-{
-        setName("sum_until");
-        setDescriptionString((string)"This function calls sleep() for the specified number of millisecs.");
-        setUsageString(sum_until_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/sum_until");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::sum_until_ssf);
-        setVersion("1.0");
-}
-    virtual ~SumUntilFunc()
-    {
-    }
+    SumUntilFunc();
+    virtual ~SumUntilFunc(){}
 
 };
 
@@ -148,26 +108,11 @@ public:
  * of ms passed in at argv[0]. (Zzzzzzzzzzzzzzz)
  *
  */
-string error_usage = "error(##) where ## is the BESError type to generate.";
-
 void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp);
-
 class ErrorFunc: public libdap::ServerFunction {
 public:
-    ErrorFunc()
-{
-        setName("error");
-        setDescriptionString((string)"This function triggers a BES Error of the type specified");
-        setUsageString(error_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/error");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::error_ssf);
-        setVersion("1.0");
-}
-    virtual ~ErrorFunc()
-    {
-    }
-
+    ErrorFunc();
+    virtual ~ErrorFunc(){}
 };
 
 
