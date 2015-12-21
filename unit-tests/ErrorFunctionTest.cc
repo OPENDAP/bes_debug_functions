@@ -37,6 +37,11 @@
 #include "Float64.h"
 #include "DebugFunctions.h"
 #include <BaseTypeFactory.h>
+#include <BESInternalError.h>
+#include <BESInternalFatalError.h>
+#include <BESSyntaxUserError.h>
+#include <BESForbiddenError.h>
+#include <BESNotFoundError.h>
 
 #include "GetOpt.h"
 

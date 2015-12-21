@@ -64,7 +64,7 @@ check-local:
 endif
 
 ErrorFunctionTest_SOURCES =  ErrorFunctionTest.cc 
-ErrorFunctionTest_LDADD =  $(DErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+ErrorFunctionTest_LDADD =  $(ErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
 
 
 AbortFunctionTest_SOURCES =  AbortFunctionTest.cc 
