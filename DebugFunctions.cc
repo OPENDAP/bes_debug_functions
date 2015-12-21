@@ -192,8 +192,8 @@ void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::Ba
  * 
  * SumUntil (Debug Functions)
  * 
- * This server side function computes a sum until a the amount of
- * of millisecs passed in at argv[0] has transpired. (++++++)
+ * This server side function computes a sum until the number of 
+ * millisecs (passed in at argv[0]) has transpired. (+,+...+)
  *
  */
  
@@ -221,24 +221,26 @@ void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap
             double end_time = start_time;
 
             long fib;
-            long one_past  = 1;
-            long two_past  = 0;
+            long one_past = 1;
+            long two_past = 0;
+            long n = 1;
             
             bool done = false;
             while(!done){
+                n++;
                 fib = one_past + two_past;
                 two_past = one_past;            
                 one_past = fib;
                 gettimeofday(&tv, NULL);
                 end_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ; // convert tv_sec & tv_usec to millisecond
-                if( end_time - start_time > milliseconds){
+                if( end_time - start_time >= milliseconds){
                     done = true;
                 }
             }
 
             msg << "Summed for " 
                 << end_time - start_time 
-                << " ms.";
+                << " ms. n: " << n;
         }
         else {
             msg << "This function only accepts integer values "
