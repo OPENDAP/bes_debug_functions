@@ -61,7 +61,9 @@ public:
  *
  */
 string abort_usage="abort(##) Where ## is the number of milliseconds to sleep before calling abort.";
+
 void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp);
+
 class AbortFunc: public libdap::ServerFunction {
 public:
     AbortFunc()
@@ -169,17 +171,6 @@ public:
     }
 
 };
-
-
-
-
-
-
-
-
-
-
-
 
 } // namespace debug
 #endif /* DEBUGFUNCTIONS_H_ */
