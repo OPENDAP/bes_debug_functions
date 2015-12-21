@@ -115,16 +115,5 @@ public:
     virtual ~ErrorFunc(){}
 };
 
-
-
-
-
-
-
-
-
-
-
-
 } // namespace debug
 #endif /* DEBUGFUNCTIONS_H_ */

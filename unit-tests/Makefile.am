@@ -6,7 +6,7 @@ SUBDIRS =
 AUTOMAKE_OPTIONS = foreign
 
 if DAP_MODULES
-AM_CPPFLAGS = -I$(top_srcdir)/modules/ugrid_functions $(GF_CFLAGS) -I$(top_srcdir)/dispatch -I$(top_srcdir)/dap $(DAP_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)/modules/debug_functions -I$(top_srcdir)/dispatch -I$(top_srcdir)/dap $(DAP_CFLAGS)
 AM_LDADD = $(BES_DISPATCH_LIB) $(BES_EXTRA_LIBS) $(DAP_SERVER_LIBS) $(DAP_CLIENT_LIBS)
 else
 AM_CPPFLAGS = -I$(top_srcdir) $(XML2_CFLAGS) $(DAP_CFLAGS)
@@ -63,15 +63,17 @@ check-local:
 	@echo ""
 endif
 
+OBJS = ../DebugFunctions.o
+
 ErrorFunctionTest_SOURCES =  ErrorFunctionTest.cc 
-ErrorFunctionTest_LDADD =  ../DebugFunctions.o $(ErrorFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+ErrorFunctionTest_LDADD =  ../DebugFunctions.o $(ErrorFunctionTest_OBJ) $(AM_LDADD) $(DAP_LIBS)
 
 
 AbortFunctionTest_SOURCES =  AbortFunctionTest.cc 
-AbortFunctionTest_LDADD =  ../DebugFunctions.o $(AbortFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+AbortFunctionTest_LDADD =  ../DebugFunctions.o $(AbortFunctionTest_OBJ) $(AM_LDADD) $(DAP_LIBS)
 
 
 SleepFunctionTest_SOURCES =  SleepFunctionTest.cc 
-SleepFunctionTest_LDADD =  ../DebugFunctions.o $(SleepFunctionTest_OBJ) $(AM_LDADD) -ltest-types $(DAP_LIBS)
+SleepFunctionTest_LDADD =  ../DebugFunctions.o $(SleepFunctionTest_OBJ) $(AM_LDADD) $(DAP_LIBS)
 
 

@@ -5,18 +5,17 @@ BES.Group=group_name
 BES.LogName=./bes.log
 BES.LogVerbose=no
 
-BES.modules=dap,cmd,debug_functions
-BES.module.dap=@modulesdir@/libdap_module.so
-BES.module.cmd=@modulesdir@/libdap_xml_module.so
-# BES.module.ascii=@modulesdir@/libascii_module.so
-#BES.module.nc=@modulesdir@/libnc_module.so
+BES.modules=dap,cmd,debug_functions,csv
+BES.module.dap=@abs_top_builddir@/dap/.libs/libdap_module.so
+BES.module.cmd=@abs_top_builddir@/xmlcommand/.libs/libdap_xml_module.so
 
-BES.module.debug_functions=@abs_top_builddir@/.libs/libdebug_functions.so
+BES.module.debug_functions=@abs_top_builddir@/modules/debug_functions/.libs/libdebug_functions.so
+BES.module.csv=@abs_top_builddir@/modules/csv/.libs/libcsv_module.so
 
-BES.Catalog.catalog.RootDirectory=@abs_top_srcdir@
+BES.Catalog.catalog.RootDirectory=@abs_top_srcdir@modules/debug_functions/
 BES.Data.RootDirectory=/dev/null
 
-BES.Catalog.catalog.TypeMatch=nc:.*.nc(.bz2|.gz|.Z)?$;
+BES.Catalog.catalog.TypeMatch=csv:.*.csv$;
 
 BES.Catalog.catalog.Include=;
 BES.Catalog.catalog.Exclude=^\..*;
