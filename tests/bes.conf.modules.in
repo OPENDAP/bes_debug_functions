@@ -10,9 +10,9 @@ BES.module.dap=@abs_top_builddir@/dap/.libs/libdap_module.so
 BES.module.cmd=@abs_top_builddir@/xmlcommand/.libs/libdap_xml_module.so
 
 BES.module.debug_functions=@abs_top_builddir@/modules/debug_functions/.libs/libdebug_functions.so
-BES.module.csv=@abs_top_builddir@/modules/csv/.libs/libcsv_module.so
+BES.module.csv=@abs_top_builddir@/modules/csv_handler/.libs/libcsv_module.so
 
-BES.Catalog.catalog.RootDirectory=@abs_top_srcdir@modules/debug_functions/
+BES.Catalog.catalog.RootDirectory=@abs_top_srcdir@/modules/debug_functions/
 BES.Data.RootDirectory=/dev/null
 
 BES.Catalog.catalog.TypeMatch=csv:.*.csv$;
