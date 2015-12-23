@@ -45,8 +45,7 @@ AUTOM4TE = autom4te
 
 TESTSUITE = $(srcdir)/debug_functionsTest
 
-$(TESTSUITE): $(srcdir)/handler_tests_macros.m4 $(srcdir)/package.m4 \
-$(srcdir)/debug_functionsTest.at
+$(TESTSUITE): $(TESTSUITE).at $(srcdir)/handler_tests_macros.m4 $(srcdir)/package.m4
 
 check-local: atconfig atlocal $(srcdir)/package.m4 $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
