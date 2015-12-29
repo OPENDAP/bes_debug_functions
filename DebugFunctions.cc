@@ -42,7 +42,6 @@
 #include <BESForbiddenError.h>
 #include <BESNotFoundError.h>
 
-
 namespace debug_function {
 
 static string getFunctionNames()
@@ -98,8 +97,6 @@ void DebugFunctions::dump(ostream &strm) const
     strm << BESIndent::LMarg << "DebugFunctions::dump - (" << (void *) this << ")" << std::endl;
 }
 
-
-
 /*****************************************************************************************
  * 
  * Abort Function (Debug Functions)
@@ -107,55 +104,53 @@ void DebugFunctions::dump(ostream &strm) const
  * This server side function calls abort(). (boom)
  *
  */
-string abort_usage="abort(##) Where ## is the number of milliseconds to sleep before calling abort.";
+string abort_usage = "abort(##) Where ## is the number of milliseconds to sleep before calling abort.";
 AbortFunc::AbortFunc()
 {
-        setName("abort");
-        setDescriptionString((string)"This function calls abort() killing the beslistner process.");
-        setUsageString(abort_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/abort");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::abort_ssf);
-        setVersion("1.0");
+    setName("abort");
+    setDescriptionString((string) "This function calls abort() killing the beslistner process.");
+    setUsageString(abort_usage);
+    setRole("http://services.opendap.org/dap4/server-side-function/debug/abort");
+    setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
+    setFunction(debug_function::abort_ssf);
+    setVersion("1.0");
 }
 
-void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
+void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp)
+{
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
     *btpp = response;
 
-    if(argc!=1){
-        msg << "Missing time parameter!  USAGE: " 
-            << abort_usage;
+    if (argc != 1) {
+        msg << "Missing time parameter!  USAGE: " << abort_usage;
     }
     else {
-        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
-        if(param1){
-           libdap::dods_int32 milliseconds = param1->value();
-           
-           msg << "abort in " << milliseconds << "ms" << endl;
-           response->set_value(msg.str());
-        
-           usleep(milliseconds * 1000);   
-           msg << "abort now. "  << endl;
-           std::abort();
-           return;
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]);
+        if (param1) {
+            libdap::dods_int32 milliseconds = param1->value();
+
+            msg << "abort in " << milliseconds << "ms" << endl;
+            response->set_value(msg.str());
+
+            usleep(milliseconds * 1000);
+            msg << "abort now. " << endl;
+            std::abort();
+            return;
         }
         else {
-            msg << "This function only accepts integer values "
-                << "for the time (in milliseconds) parameter.  USAGE: " 
+            msg << "This function only accepts integer values " << "for the time (in milliseconds) parameter.  USAGE: "
                 << abort_usage;
         }
-        
+
     }
-    
+
     response->set_value(msg.str());
     return;
-};
+}
+;
 
-
- 
 /*****************************************************************************************
  * 
  * Sleep Function (Debug Functions)
@@ -164,20 +159,21 @@ void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseT
  * of millisecs passed in at argv[0]. (Zzzzzzzzzzzzzzz)
  *
  */
- 
+
 string sleep_usage = "sleep(##) where ## is the number of milliseconds to sleep.";
 SleepFunc::SleepFunc()
 {
-        setName("sleep");
-        setDescriptionString((string)"This function calls sleep() for the specified number of millisecs.");
-        setUsageString(sleep_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/sleep");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::sleep_ssf);
-        setVersion("1.0");
+    setName("sleep");
+    setDescriptionString((string) "This function calls sleep() for the specified number of millisecs.");
+    setUsageString(sleep_usage);
+    setRole("http://services.opendap.org/dap4/server-side-function/debug/sleep");
+    setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
+    setFunction(debug_function::sleep_ssf);
+    setVersion("1.0");
 }
 
-void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
+void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp)
+{
 
     std::stringstream msg;
     libdap::Str *sleep_info = new libdap::Str("info");
@@ -188,129 +184,126 @@ void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseT
 
     *btpp = sleep_info;
 
-    if(argc!=1){
-        msg << "Missing time parameter!  USAGE: " 
-            << sleep_usage;
+    if (argc != 1) {
+        msg << "Missing time parameter!  USAGE: " << sleep_usage;
     }
     else {
-        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
-        if(param1){
-           libdap::dods_int32 milliseconds = param1->value();
-            usleep(milliseconds * 1000);   
-            msg << "Slept for " 
-                << milliseconds 
-                << " ms.";
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]);
+        if (param1) {
+            libdap::dods_int32 milliseconds = param1->value();
+            usleep(milliseconds * 1000);
+            msg << "Slept for " << milliseconds << " ms.";
         }
         else {
-            msg << "This function only accepts integer values "
-                << "for the time (in milliseconds) parameter.  USAGE: " 
+            msg << "This function only accepts integer values " << "for the time (in milliseconds) parameter.  USAGE: "
                 << sleep_usage;
         }
-        
+
     }
-    
+
     sleep_info->set_value(msg.str());
 
-
     /*
-    for (libdap::DDS::Vars_iter it = dds.var_begin(); it != dds.var_end(); ++it) {
-        libdap::BaseType *pBT = *it;
-        sleepResult->add_var(pBT);
-    }
-    */
-
-
-
+     for (libdap::DDS::Vars_iter it = dds.var_begin(); it != dds.var_end(); ++it) {
+     libdap::BaseType *pBT = *it;
+     sleepResult->add_var(pBT);
+     }
+     */
 
     return;
-};
-
-
-
-
- 
+}
+;
 
 /*****************************************************************************************
  * 
  * SumUntil (Debug Functions)
  * 
  * This server side function computes a sum until the number of 
- * millisecs (passed in at argv[0]) has transpired. (+,+...+)
+ * millisecs (passed in at argv[0]) has transpired. (+,+...+).
+ *
+ * @note Modified so that the actual sum value can be printed or not.
+ * When this is used in tests, the value reached can vary, so to make
+ * checking for success/failure, the value can be omitted.
  *
  */
- 
-string sum_until_usage = "sum_until(##) Will compute a sum until ## of milliseconds has transpired.";
+
+string sum_until_usage = "sum_until(<val> [,0|<true>]) Compute a sum until <val> of milliseconds has elapsed; 0|<true> print the sum value.";
 SumUntilFunc::SumUntilFunc()
 {
-        setName("sum_until");
-        setDescriptionString((string)"This function calls sleep() for the specified number of millisecs.");
-        setUsageString(sum_until_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/sum_until");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::sum_until_ssf);
-        setVersion("1.0");
+    setName("sum_until");
+    setDescriptionString((string) "This function calls sleep() for the specified number of millisecs.");
+    setUsageString(sum_until_usage);
+    setRole("http://services.opendap.org/dap4/server-side-function/debug/sum_until");
+    setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
+    setFunction(debug_function::sum_until_ssf);
+    setVersion("1.0");
 }
 
-
-void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
+void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp)
+{
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
     *btpp = response;
 
+    if (!(argc == 1 || argc == 2)) {
+        msg << "Missing time parameter!  USAGE: " << sum_until_usage;
 
-    if(argc!=1){
-        msg << "Missing time parameter!  USAGE: " 
+        response->set_value(msg.str());
+        return;
+    }
+
+    libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]);
+    // param1 is required
+    if (!param1) {
+        msg << "This function only accepts integer values " << "for the time (in milliseconds) parameter.  USAGE: "
             << sum_until_usage;
+
+        response->set_value(msg.str());
+        return;
     }
-    else {
+
+    bool print_sum_value = true;
+    // argument #2 is optional
+    if (argc == 2) {
+        libdap::Int32 *temp = dynamic_cast<libdap::Int32*>(argv[1]);
+        if (temp && temp->value() == 0)
+            print_sum_value = false;
+    }
     
+    libdap::dods_int32 milliseconds = param1->value();
 
-        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
-        if(param1){
-            libdap::dods_int32 milliseconds = param1->value();
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    double start_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000; // convert tv_sec & tv_usec to millisecond
+    double end_time = start_time;
 
-            struct timeval  tv;
-            gettimeofday(&tv, NULL);
-            double start_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ; // convert tv_sec & tv_usec to millisecond
-            double end_time = start_time;
+    long fib;
+    long one_past = 1;
+    long two_past = 0;
+    long n = 1;
 
-            long fib;
-            long one_past = 1;
-            long two_past = 0;
-            long n = 1;
-            
-            bool done = false;
-            while(!done){
-                n++;
-                fib = one_past + two_past;
-                two_past = one_past;            
-                one_past = fib;
-                gettimeofday(&tv, NULL);
-                end_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ; // convert tv_sec & tv_usec to millisecond
-                if( end_time - start_time >= milliseconds){
-                    done = true;
-                }
-            }
-
-            msg << "Summed for " 
-                << end_time - start_time 
-                << " ms. n: " << n;
+    bool done = false;
+    while (!done) {
+        n++;
+        fib = one_past + two_past;
+        two_past = one_past;
+        one_past = fib;
+        gettimeofday(&tv, NULL);
+        end_time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000; // convert tv_sec & tv_usec to millisecond
+        if (end_time - start_time >= milliseconds) {
+            done = true;
         }
-        else {
-            msg << "This function only accepts integer values "
-                << "for the time (in milliseconds) parameter.  USAGE: " 
-                << sum_until_usage;
-        }
-        
     }
+
+    if (!print_sum_value)
+        msg << "Summed for " << end_time - start_time << " ms.";
+    else
+        msg << "Summed for " << end_time - start_time << " ms. n: " << n;
     
     response->set_value(msg.str());
     return;
-};
-
-
-
+}
 
 /*****************************************************************************************
  * 
@@ -323,100 +316,86 @@ void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::B
 string error_usage = "error(##) where ## is the BESError type to generate.";
 ErrorFunc::ErrorFunc()
 {
-        setName("error");
-        setDescriptionString((string)"This function triggers a BES Error of the type specified");
-        setUsageString(error_usage);
-        setRole("http://services.opendap.org/dap4/server-side-function/debug/error");
-        setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
-        setFunction(debug_function::error_ssf);
-        setVersion("1.0");
+    setName("error");
+    setDescriptionString((string) "This function triggers a BES Error of the type specified");
+    setUsageString(error_usage);
+    setRole("http://services.opendap.org/dap4/server-side-function/debug/error");
+    setDocUrl("http://docs.opendap.org/index.php/Debug_Functions");
+    setFunction(debug_function::error_ssf);
+    setVersion("1.0");
 }
 
-void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
+void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp)
+{
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
     *btpp = response;
-    
+
     string location = "error_ssf";
 
-    if(argc!=1){
-        msg << "Missing error type parameter!  USAGE: " 
-            << error_usage;
+    if (argc != 1) {
+        msg << "Missing error type parameter!  USAGE: " << error_usage;
     }
     else {
-        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]) ;  
-        if(param1){
+        libdap::Int32 *param1 = dynamic_cast<libdap::Int32*>(argv[0]);
+        if (param1) {
             libdap::dods_int32 error_type = param1->value();
-        
-            switch(error_type) {
-            
-                case BES_INTERNAL_ERROR:
-                {
-                    msg << "A BESInternalError was requested.";
-                    BESInternalError error(msg.str(),location,0);
-                    throw error;
-                }
+
+            switch (error_type) {
+
+            case BES_INTERNAL_ERROR: {
+                msg << "A BESInternalError was requested.";
+                BESInternalError error(msg.str(), location, 0);
+                throw error;
+            }
                 break;
-                
-                case BES_INTERNAL_FATAL_ERROR:
-                {
-                    msg << "A BESInternalFatalError was requested.";
-                    BESInternalFatalError error(msg.str(),location,0);
-                    throw error;
-                }
+
+            case BES_INTERNAL_FATAL_ERROR: {
+                msg << "A BESInternalFatalError was requested.";
+                BESInternalFatalError error(msg.str(), location, 0);
+                throw error;
+            }
                 break;
-                
-                case BES_SYNTAX_USER_ERROR:
-                {
-                    msg << "A BESSyntaxUserError was requested.";
-                    BESSyntaxUserError error(msg.str(),location,0);
-                    throw error;
-                }
+
+            case BES_SYNTAX_USER_ERROR: {
+                msg << "A BESSyntaxUserError was requested.";
+                BESSyntaxUserError error(msg.str(), location, 0);
+                throw error;
+            }
                 break;
-                
-                case BES_FORBIDDEN_ERROR:
-                {
-                    msg << "A BESForbiddenError was requested.";
-                    BESForbiddenError error(msg.str(),location,0);
-                    throw error;
-                }
+
+            case BES_FORBIDDEN_ERROR: {
+                msg << "A BESForbiddenError was requested.";
+                BESForbiddenError error(msg.str(), location, 0);
+                throw error;
+            }
                 break;
-                
-                case BES_NOT_FOUND_ERROR:
-                {
-                    msg << "A BESNotFoundError was requested.";
-                    BESNotFoundError error(msg.str(),location,0);
-                    throw error;
-                }
+
+            case BES_NOT_FOUND_ERROR: {
+                msg << "A BESNotFoundError was requested.";
+                BESNotFoundError error(msg.str(), location, 0);
+                throw error;
+            }
                 break;
-                
-                default:
+
+            default:
                 msg << "An unrecognized error_type parameter was received. error_type: " << error_type;
                 break;
             }
-            
 
         }
         else {
-            msg << "This function only accepts integer values "
-                << "for the error type parameter.  USAGE: " 
+            msg << "This function only accepts integer values " << "for the error type parameter.  USAGE: "
                 << error_usage;
         }
-        
+
     }
-    
+
     response->set_value(msg.str());
     return;
 
-};
-
-
-
-
-
-
-
+}
 
 } // namespace debug_function
 

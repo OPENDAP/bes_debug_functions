@@ -33,7 +33,6 @@ m4_define([_AT_BESCMD_ABORT_TEST], [dnl
     AT_CLEANUP
 ])
 
-dnl AT_BESCMD_RESPONSE_TEST([sleep.bescmd])
 AT_BESCMD_BINARYDATA_RESPONSE_TEST([sleep.bescmd])
 
 AT_BESCMD_ABORT_TEST([abort.bescmd], [xfail])
@@ -50,3 +49,10 @@ AT_BESCMD_ERROR_RESPONSE_TEST([internal_fatal_error.bescmd])
 AT_BESCMD_RESPONSE_TEST([syntax_user_error.bescmd])
 AT_BESCMD_RESPONSE_TEST([forbidden_error.bescmd])
 AT_BESCMD_RESPONSE_TEST([not_found_error.bescmd])
+
+dnl These tests are for the timeout feature. The first call should return
+dnl a valid response but the second should timeout, which currently means
+dnl the BES just exits
+
+AT_BESCMD_BINARYDATA_RESPONSE_TEST([sum_until.bescmd])
+AT_BESCMD_RESPONSE_TEST([sum_until2.bescmd])
