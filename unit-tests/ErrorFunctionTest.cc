@@ -60,7 +60,7 @@ private:
 
 public:
     // Called once before everything gets tested
-    ErrorFunctionTest()
+    ErrorFunctionTest() :testDDS(0)
     {
 
     }
@@ -144,7 +144,7 @@ CPPUNIT_TEST_SUITE( ErrorFunctionTest );
             error_function(1, argv, *testDDS, btpp);      
             CPPUNIT_ASSERT(false);
         }
-        catch(BESInternalFatalError e){
+        catch(BESInternalFatalError &e){
             DBG(cerr << "internalFatalErrorFunctionTest() - Caught BESInternalFatalError. msg: " << e.get_message() << endl);
             CPPUNIT_ASSERT(true);
         }
@@ -170,7 +170,7 @@ CPPUNIT_TEST_SUITE( ErrorFunctionTest );
             error_function(1, argv, *testDDS, btpp);      
             CPPUNIT_ASSERT(false);
         }
-        catch(BESSyntaxUserError e){
+        catch(BESSyntaxUserError &e){
             DBG(cerr << "syntaxUserErrorFunctionTest() - Caught BESSyntaxUserError. msg: " << e.get_message() << endl);
             CPPUNIT_ASSERT(true);
         }
@@ -196,7 +196,7 @@ CPPUNIT_TEST_SUITE( ErrorFunctionTest );
             error_function(1, argv, *testDDS, btpp);      
             CPPUNIT_ASSERT(false);
         }
-        catch(BESForbiddenError e){
+        catch(BESForbiddenError &e){
             DBG(cerr << "forbiddenErrorFunctionTest() - Caught BESForbiddenError. msg: " << e.get_message() << endl);
             CPPUNIT_ASSERT(true);
         }

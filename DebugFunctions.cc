@@ -118,7 +118,7 @@ AbortFunc::AbortFunc()
         setVersion("1.0");
 }
 
-void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
@@ -176,7 +176,7 @@ SleepFunc::SleepFunc()
         setVersion("1.0");
 }
 
-void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
@@ -234,7 +234,7 @@ SumUntilFunc::SumUntilFunc()
 }
 
 
-void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+void sum_until_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
@@ -314,7 +314,7 @@ ErrorFunc::ErrorFunc()
         setVersion("1.0");
 }
 
-void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &dds, libdap::BaseType **btpp){
+void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
 
     std::stringstream msg;
     libdap::Str *response = new libdap::Str("info");
