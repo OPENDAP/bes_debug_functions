@@ -7,7 +7,7 @@
             <Administrator>support@opendap.org</Administrator>
             <Location>
                 <File>BESInterface.cc</File>
-                <Line>315</Line>
+                <Line>322</Line>
             </Location>
         </BESError>
     </getDODS>
