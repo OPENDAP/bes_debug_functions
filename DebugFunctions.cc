@@ -33,6 +33,7 @@
 #include "ServerFunctionsList.h"
 #include "BESDebug.h"
 #include <Int32.h>
+#include <Structure.h>
 #include <Str.h>
 #include <BESError.h>
 #include <BESInternalError.h>
@@ -179,8 +180,13 @@ SleepFunc::SleepFunc()
 void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseType **btpp){
 
     std::stringstream msg;
-    libdap::Str *response = new libdap::Str("info");
-    *btpp = response;
+    libdap::Str *sleep_info = new libdap::Str("info");
+
+    //libdap::Structure *sleepResult = new libdap::Structure("sleep_result_unwrap");
+    //sleepResult->add_var_nocopy(sleep_info);
+    //*btpp = sleepResult;
+
+    *btpp = sleep_info;
 
     if(argc!=1){
         msg << "Missing time parameter!  USAGE: " 
@@ -203,7 +209,19 @@ void sleep_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseT
         
     }
     
-    response->set_value(msg.str());
+    sleep_info->set_value(msg.str());
+
+
+    /*
+    for (libdap::DDS::Vars_iter it = dds.var_begin(); it != dds.var_end(); ++it) {
+        libdap::BaseType *pBT = *it;
+        sleepResult->add_var(pBT);
+    }
+    */
+
+
+
+
     return;
 };
 
