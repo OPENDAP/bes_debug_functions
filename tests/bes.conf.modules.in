@@ -17,6 +17,8 @@ BES.Data.RootDirectory=/dev/null
 
 BES.Catalog.catalog.TypeMatch=csv:.*.csv$;
 
+BES.TimeOutInSeconds=4
+
 BES.Catalog.catalog.Include=;
 BES.Catalog.catalog.Exclude=^\..*;
 

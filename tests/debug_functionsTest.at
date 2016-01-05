@@ -55,4 +55,5 @@ dnl a valid response but the second should timeout, which currently means
 dnl the BES just exits
 
 AT_BESCMD_BINARYDATA_RESPONSE_TEST([sum_until.bescmd])
-AT_BESCMD_RESPONSE_TEST([sum_until2.bescmd])
+AT_BESCMD_RESPONSE_PATTERN_TEST([sum_until2.bescmd])
+AT_BESCMD_RESPONSE_PATTERN_TEST([sum_until3.bescmd])
