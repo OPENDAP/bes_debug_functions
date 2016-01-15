@@ -136,7 +136,7 @@ void abort_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseT
 
             usleep(milliseconds * 1000);
             msg << "abort now. " << endl;
-            std::abort();
+            abort();
             return;
         }
         else {
