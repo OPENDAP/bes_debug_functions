@@ -41,6 +41,7 @@
 #include <BESSyntaxUserError.h>
 #include <BESForbiddenError.h>
 #include <BESNotFoundError.h>
+#include <BESTimeoutError.h>
 
 namespace debug_function {
 
@@ -379,8 +380,15 @@ void error_ssf(int argc, libdap::BaseType * argv[], libdap::DDS &, libdap::BaseT
             }
                 break;
 
+            case BES_TIMEOUT_ERROR: {
+                msg << "A BESTimeOutError was requested.";
+                BESTimeoutError error(msg.str(), location, 0);
+                throw error;
+            }
+                break;
+
             default:
-                msg << "An unrecognized error_type parameter was received. error_type: " << error_type;
+                msg << "An unrecognized error_type parameter was received. Requested error_type: " << error_type;
                 break;
             }
 
