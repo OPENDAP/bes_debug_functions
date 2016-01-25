@@ -21,12 +21,16 @@ m4_define([_AT_BESCMD_ABORT_TEST], [dnl
 
     AS_IF([test -n "$baselines" -a x$baselines = xyes],
         [
-        AT_CHECK([besstandalone -c $abs_builddir/bes.conf -i $input], [], [stdout], [])
-        AT_CHECK([mv stdout $baseline.tmp])
+        AT_CHECK([besstandalone -c $abs_builddir/bes.conf -i $input || true],
+	         [0], [ignore], [stderr])
+        AT_CHECK([mv stderr $baseline.tmp])
         ],
         [
-        AT_CHECK([besstandalone -c $abs_builddir/bes.conf -i $input || true], [], [stdout], [stderr])
-        AT_CHECK([grep "Abort trap" stdout || grep "Abort trap" stderr], [], [ignore], [], [])
+	dnl Use '|| true' and '0' for the return because abort returns
+	dnl odd values on different machines (3.g., 134 on CentOS 6)
+        AT_CHECK([besstandalone -c $abs_builddir/bes.conf -i $input || true],
+	         [0], [ignore], [stderr])
+        AT_CHECK([grep -f $baseline stderr], [0], [ignore], [ignore])
         AT_XFAIL_IF([test "$3" = "xfail"])
         ])
 
