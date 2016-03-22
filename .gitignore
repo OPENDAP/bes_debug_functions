@@ -34,4 +34,5 @@ unit-tests/AbortFunctionTest
 unit-tests/DebugFunctionsTest
 unit-tests/ErrorFunctionTest
 unit-tests/SleepFunctionTest
+unit-tests/test-suite.log
 debug_functions.conf
