@@ -1,3 +1,24 @@
+2016-03-22  Nathan Potter  <ndp@opendap.org>
+
+	Added new include DebugFunctions.h to support OS-X compiler complaints.
+
+2016-03-21  Nathan Potter  <ndp@opendap.org>
+
+	Added test0suite.log to .gitignore
+
+2016-02-03  Nathan Potter  <ndp@opendap.org>
+
+	Merge branch 'master' of https://github.com/opendap/debug_functions
+
+2016-02-02  James Gallagher  <jgallagher@opendap.org>
+
+	Changes to NEWS
+
+2016-01-26  James Gallagher  <jgallagher@opendap.org>
+
+	Updated ChangeLog, etc., for the bes 3.17 release
+
+	Updated autotest tests, macros and Makefile.am files
 2016-01-26  James Gallagher  <jgallagher@opendap.org>
 
 	Updated autotest tests, macros and Makefile.am files
